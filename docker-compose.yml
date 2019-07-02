@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+    mongo:
+        image: mongo
+        ports:
+            - 27017:27017
+        volumes:
+            - ./db:/data/db
+
+    parse:
+        build: ./bin/parse
+        ports:
+            - 1337:1337
+        links:
+            - mongo
+        tty: true
+        stdin_open: true
+        container_name: parse-server
+        environment:
+            - PARSE_SERVER_APPLICATION_ID=yourappid
+            - PARSE_SERVER_PORT=1337
+            - PARSE_SERVER_MASTER_KEY=yourmasterkey
+            - PARSE_SERVER_DATABASE_URI=mongodb://mongo:27017/dev
+            - PARSE_SERVER_START_LIVE_QUERY_SERVER=1
+            - PARSE_SERVER_LIVE_QUERY={"classNames":["people","monitor"]}
