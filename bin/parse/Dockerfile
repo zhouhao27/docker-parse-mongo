@@ -10,3 +10,4 @@ WORKDIR /home
 RUN yarn
 
 # CMD ["pm2","start","start.sh"]
+CMD []
